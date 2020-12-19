@@ -9,8 +9,7 @@ router.post('/', async(req, res, next) => {
     });
     try {
         const categoriaGuardada = await categoria.save();
-        res.status(201);
-        res.json(categoriaGuardada);
+        res.status(201).json(categoriaGuardada);
         console.log(categoriaGuardada);
     } catch (error) {
         res.status(413);

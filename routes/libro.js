@@ -4,17 +4,15 @@ const router = express.Router();
 const LibroModel = require('../models/libro');
 
 router.post('/', async(req, res) => {
+    const libro = new LibroModel(req.body)
     try {
-        const { nombre, apellido, alias, email } = await req.body;
-        res.status(200).send({
-            mensaje: `Nombre: ${nombre},
-          Apellido: ${apellido},
-          Alias: ${alias},
-          Email: ${email}`
-        });
+        const libroGuardado = await libro.save();
+        res.status(201).json(libroGuardado);
+
     } catch (error) {
-        console.log(error);
-        res.status(413).send({ mensaje: 'error.message' });
+        res.status(413);
+        res.send('"ese libro ya existe", "nombre y categoria son datos obligatorios", "no existe la categoria indicada", "no existe la persona indicada"');
+        next(error);
     }
 });
 

@@ -3,9 +3,12 @@ const mongoose = require('mongoose');
 const LibroSchema = new mongoose.Schema({
     nombre: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    descripcion: String,
+    descripcion: {
+        type: String
+    },
     categoria_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'categoria',
@@ -14,7 +17,7 @@ const LibroSchema = new mongoose.Schema({
     persona_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'persona',
-        required: true
+        required: false
     }
 
 });
