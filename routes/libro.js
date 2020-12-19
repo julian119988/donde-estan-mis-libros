@@ -3,8 +3,13 @@ const router = express.Router();
 
 const LibroModel = require('../models/libro');
 
-router.post('/', async(req, res) => {
-    const libro = new LibroModel(req.body)
+router.post('/', async(req, res, next) => {
+    const libro = new LibroModel({
+        nombre: req.body.nombre.toUpperCase(),
+        descripcion: req.body.descripcion.toUpperCase(),
+        categoria_id: req.body.categoria_id,
+        persona_id: req.body.persona_id
+    });
     try {
         const libroGuardado = await libro.save();
         res.status(201).json(libroGuardado);

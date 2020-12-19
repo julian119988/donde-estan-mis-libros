@@ -3,18 +3,20 @@ const router = express.Router();
 
 const PersonaModel = require('../models/persona');
 
-router.post('/', async(req, res) => {
+router.post('/', async(req, res, next) => {
+    const persona = new PersonaModel({
+        nombre: req.body.nombre.toUpperCase(),
+        apellido: req.body.apellido.toUpperCase(),
+        alias: req.body.alias.toUpperCase(),
+        email: req.body.email.toLowerCase()
+    });
     try {
-        const { nombre, apellido, alias, email } = await req.body;
-        res.status(200).send({
-            mensaje: `Nombre: ${nombre},
-            Apellido: ${apellido},
-            Alias: ${alias},
-            Email: ${email}`
-        });
+        const personaGuardada = await persona.save();
+        res.status(201).json(personaGuardada);
     } catch (error) {
-        console.log(error);
-        res.status(413).send({ mensaje: 'error.message' });
+        res.status(413);
+        res.send('"Faltan datos", "El email ya se encuentra registrado", "error inesperado"');
+        next(error);
     }
 });
 
