@@ -29,19 +29,24 @@ router.get('/', async(req, res, next) => {
         res.status(200).json(libro);
     } catch (error) {
         res.status(413);
-        res.send(error, { mensaje: 'Error inesperado' });
-        next()
+        res.send("mensaje: 'Error inesperado'");
+        next(error)
+    }
+});
+router.get('/:id', async(req, res, next) => {
+    const { id } = req.params;
+    try {
+        //const libro = await LibroModel.findById(id);
+        const libro = await LibroModel.findById(id).populate('persona_id');
+        //populate muestra todos los datos de la persona que tiene el libro
+        res.status(200).json(libro);
+    } catch (error) {
+        res.status(413);
+        res.send("mensaje: 'Error inesperado, No se encuentra ese libro'");
+        next(error)
     }
 });
 
-router.get('/:id', async(req, res) => {
-    try {
-        res.status(200).send('Libro con el id seleccionado');
-        //const respuesta = await categoriaModel.find();
-    } catch (error) {
-        res.status(413).send(error, { mensaje: 'Error inesperado, No se encuentra esa persona' });
-    }
-});
 
 router.put('/:id', async(req, res) => {
     try {

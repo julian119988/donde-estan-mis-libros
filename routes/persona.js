@@ -26,19 +26,22 @@ router.get('/', async(req, res) => {
         res.status(200).json(persona);
     } catch (error) {
         res.status(413);
-        res.send(error, { mensaje: 'Error inesperado' });
-        next()
+        res.send("mensaje: 'Error inesperado'");
+        next(error)
+    }
+});
+router.get('/:id', async(req, res) => {
+    const { id } = req.params;
+    try {
+        const persona = await PersonaModel.findById(id);
+        res.status(200).json(persona);
+    } catch (error) {
+        res.status(413);
+        res.send("mensaje: 'Error inesperado', 'No se encuentra esa persona'");
+        next(error)
     }
 });
 
-router.get('/:id', async(req, res) => {
-    try {
-        res.status(200).send('Persona con el id seleccionado');
-        //const respuesta = await categoriaModel.find();
-    } catch (error) {
-        res.status(413).send(error, { mensaje: 'Error inesperado, No se encuentra esa persona' });
-    }
-});
 
 router.put('/:id', async(req, res) => {
     try {
