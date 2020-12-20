@@ -22,10 +22,12 @@ router.post('/', async(req, res, next) => {
 
 router.get('/', async(req, res) => {
     try {
-        res.status(200).send('Listado de personas!!');
-        //const respuesta = await categoriaModel.find();
+        const persona = await PersonaModel.find();
+        res.status(200).json(persona);
     } catch (error) {
-        res.status(413).send(error, { mensaje: 'Error inesperado' });
+        res.status(413);
+        res.send(error, { mensaje: 'Error inesperado' });
+        next()
     }
 });
 

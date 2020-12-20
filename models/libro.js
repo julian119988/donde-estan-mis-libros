@@ -9,16 +9,16 @@ const LibroSchema = new mongoose.Schema({
     descripcion: {
         type: String
     },
-    categoria_id: {
+    categoria_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'categoria',
         required: true
-    },
-    persona_id: {
+    }],
+    persona_id: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'persona',
         required: false
-    }
+    }]
 
 });
 const LibroModel = mongoose.model('libro', LibroSchema);

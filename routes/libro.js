@@ -21,12 +21,16 @@ router.post('/', async(req, res, next) => {
     }
 });
 
-router.get('/', async(req, res) => {
+router.get('/', async(req, res, next) => {
     try {
-        res.status(200).send('Listado Libros!!');
-        //const respuesta = await categoriaModel.find();
+        const libro = await LibroModel.find()
+            //const libro = await LibroModel.find().populate('persona_id');
+            //populate muestra todos los datos de la persona que tiene el libro
+        res.status(200).json(libro);
     } catch (error) {
-        res.status(413).send(error, { mensaje: 'Error inesperado' });
+        res.status(413);
+        res.send(error, { mensaje: 'Error inesperado' });
+        next()
     }
 });
 

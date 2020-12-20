@@ -10,7 +10,6 @@ router.post('/', async(req, res, next) => {
     try {
         const categoriaGuardada = await categoria.save();
         res.status(201).json(categoriaGuardada);
-        console.log(categoriaGuardada);
     } catch (error) {
         res.status(413);
         res.send('"faltan datos", "ese nombre de categoria ya existe", "error inesperado"')
@@ -18,12 +17,14 @@ router.post('/', async(req, res, next) => {
     }
 });
 
-router.get('/', async(req, res) => {
+router.get('/', async(req, res, next) => {
     try {
-        res.status(200).send('Listado de categorias!!');
-        //const respuesta = await categoriaModel.find();
+        const categoria = await CategoriaModel.find();
+        res.status(200).json(categoria);
     } catch (error) {
-        res.status(413).send(error, { mensaje: 'Error inesperado' });
+        res.status(413);
+        res.send(error, { mensaje: 'Error inesperado' });
+        next();
     }
 });
 
