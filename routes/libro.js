@@ -48,12 +48,15 @@ router.get('/:id', async(req, res, next) => {
 });
 
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', async(req, res, next) => {
+    const { id } = req.params;
     try {
-        res.status(200).send('Se modifico el libro selaccionado');
+        const updatedLibro = await LibroModel.findByIdAndUpdate(id, { descripcion: req.body.descripcion.toUpperCase() }, { new: true });
+        res.status(200).json(updatedLibro);
     } catch (error) {
         console.log(error);
-        res.status(413).send({ mensaje: 'Error inesperado, No Se encuentra esa persona' });
+        res.status(413).send("mensaje: 'Error inesperado', 'Solo se pude modificar la descripcion del libro'");
+        next(error);
     }
 });
 
