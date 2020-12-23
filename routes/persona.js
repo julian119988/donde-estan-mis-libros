@@ -59,12 +59,15 @@ router.put('/:id', async(req, res) => {
     }
 });
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', async(req, res, next) => {
+    const { id } = req.params;
     try {
-        res.status(200).send('Se borro la persona seleccionada');
-        //const respuesta = await categoriaModel.find();
+        const personaBorrada = await PersonaModel.findByIdAndDelete(id);
+        res.status(200).json(personaBorrada);
+        console.log('Se borro correctamente');
     } catch (error) {
         res.status(413).send(error, { mensaje: 'Error inesperado, No existe esa persona, Esa persona tiene libros asociados no se puede eliminar' });
+        next(error);
     }
 });
 

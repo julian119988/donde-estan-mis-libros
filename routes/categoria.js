@@ -40,12 +40,15 @@ router.get('/:id', async(req, res, next) => {
 });
 
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', async(req, res, next) => {
+    const { id } = req.params;
     try {
-        res.status(200).send({ mensaje: 'Se borro correctamente' });
-        //const respuesta = await categoriaModel.find();
+        const categoriaBorrada = await CategoriaModel.findByIdAndDelete(id);
+        res.status(200).json(categoriaBorrada);
+        console.log('Se borro correctamente');
     } catch (error) {
-        res.status(413).send(error, { mensaje: 'Error inesperado, Categoria con libros asociados no se puede eliminar, No existe Categoria indicada' });
+        res.status(413).send({ mensaje: 'Error inesperado, Categoria con libros asociados no se puede eliminar, No existe Categoria indicada' });
+        next(error);
     }
 });
 

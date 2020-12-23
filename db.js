@@ -7,7 +7,8 @@ async function conectar() {
         await mongoose.connect(uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useFindAndModify: false
         })
         console.log("Conectado a BD metodo: Mongoodb Atlas - async-await");
     } catch (e) {

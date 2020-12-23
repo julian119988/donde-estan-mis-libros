@@ -78,12 +78,16 @@ router.put('/prestar/:id', async(req, res) => {
     }
 });
 
-router.delete('/:id', async(req, res) => {
+router.delete('/:id', async(req, res, next) => {
+    const { id } = req.params;
     try {
-        res.status(200).send('Se borro el libro seleccionado');
+        const libroBorrado = await LibroModel.findByIdAndDelete(id);
+        res.status(200).json(libroBorrado);
+        console.log('Se borro correctamente');
         //const respuesta = await categoriaModel.find();
     } catch (error) {
-        res.status(413).send(error, { mensaje: 'Error inesperado, No existe esa persona, Esa persona tiene libros asociados no se puede eliminar' });
+        res.status(413).send({ mensaje: 'Error inesperado, No se encuentra es libro, Ese libro eta prestado no se puede eliminar' });
+        next(error);
     }
 });
 
