@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const uri = "mongodb+srv://admin:admin@where-is-my-books.utvpb.mongodb.net/where-is-my-books?retryWrites=true&w=majority";
+const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PW}@where-is-my-books.utvpb.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 async function conectar() {
     try {
