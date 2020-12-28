@@ -4,10 +4,12 @@ const LibroSchema = new mongoose.Schema({
     nombre: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        trim: true
     },
     descripcion: {
-        type: String
+        type: String,
+        trim: true
     },
     categoria_id: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -20,6 +22,8 @@ const LibroSchema = new mongoose.Schema({
         required: false
     }]
 
+}, {
+    versionKey: false
 });
 const LibroModel = mongoose.model('libro', LibroSchema);
 

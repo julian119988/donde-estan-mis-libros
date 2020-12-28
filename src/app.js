@@ -13,8 +13,6 @@ const db = require('./db');
 
 const app = express();
 
-const PORT = process.env.PORT || 3000
-
 
 app.use(bodyParser.json());
 app.use(express.json());
@@ -29,8 +27,4 @@ app.use('/libro', libroRouter);
 app.use(middlewares.noEncontrado);
 app.use(middlewares.manejadorDeErrores);
 
-
-//CONEXION A PUERTO
-app.listen(PORT, () => {
-    console.log(`Escuchando en puerto ${PORT}`);
-})
+module.exports = app;
